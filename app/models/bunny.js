@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+const snackSchema = require('./snack')
+
 const bunnySchema = new mongoose.Schema(
 	{
 		name: {
@@ -14,6 +16,7 @@ const bunnySchema = new mongoose.Schema(
 			type: Number,
 			required: true,
 		},
+		snack: [snackSchema],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',

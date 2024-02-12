@@ -5,6 +5,7 @@ const cors = require('cors')
 
 // require route files
 const bunnyRoutes = require('./app/routes/bunny_routes')
+const snackRoutes = require('./app/routes/snack_routes')
 const userRoutes = require('./app/routes/user_routes')
 
 // require middleware
@@ -66,6 +67,7 @@ app.use(requestLogger)
 
 // register route files
 app.use(bunnyRoutes)
+app.use(snackRoutes)
 app.use(userRoutes)
 
 // register error handling middleware
