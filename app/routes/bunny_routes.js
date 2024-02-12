@@ -29,8 +29,25 @@ const router = express.Router()
 
 // INDEX
 // GET /bunnys
-router.get('/bunnys', requireToken, (req, res, next) => {
+router.get('/bunnys',(req, res, next) => {
 	Bunny.find()
+		.then((bunnys) => {
+			// `bunnys` will be an array of Mongoose documents
+			// we want to convert each one to a POJO, so we use `.map` to
+			// apply `.toObject` to each one
+			return bunnys.map((bunny) => bunny.toObject())
+		})
+		// respond with status 200 and JSON of the bunnys
+		.then((bunnys) => res.status(200).json({ bunnys: bunnys }))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
+
+// show route for only the logged in users pets
+// GEt /bunnys/mine
+// requiretoken gives us access to req.user.id
+router.get('/bunnys/mine', requireToken, (req, res, next) => {
+	Bunny.find({owner: req.user.id})
 		.then((bunnys) => {
 			// `bunnys` will be an array of Mongoose documents
 			// we want to convert each one to a POJO, so we use `.map` to
@@ -48,6 +65,7 @@ router.get('/bunnys', requireToken, (req, res, next) => {
 router.get('/bunnys/:id', (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Bunny.findById(req.params.id)
+  .populate('owner')
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "bunny" JSON
 		.then((bunny) => res.status(200).json({ bunny: bunny.toObject() }))
