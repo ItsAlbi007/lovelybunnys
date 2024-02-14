@@ -16,6 +16,11 @@ const bunnySchema = new mongoose.Schema(
 			type: Number,
 			required: true,
 		},
+		forsale: {
+			type: Boolean,
+			required: true,
+			default: false,
+		},
 		snack: [snackSchema],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,

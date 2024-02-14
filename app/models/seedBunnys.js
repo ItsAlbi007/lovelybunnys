@@ -10,10 +10,10 @@ const Bunny = require('./bunny')
 const db = require('../../config/db')
 
 const startBunnys = [
-  { name: 'Sparky', type: 'bunny', age: 2, adoptable: true},
-  { name: 'Leroy', type: 'bunny', age: 10, adoptable: true},
-  { name: 'Biscuits', type: 'bunny', age: 3, adoptable: true},
-  { name: 'Hulk Hogan', type: 'bunny', age: 1, adoptable: true}
+  { name: 'Sparky', type: 'bunny', age: 2, forsale: true},
+  { name: 'Leroy', type: 'bunny', age: 10, forsale: true},
+  { name: 'Biscuits', type: 'bunny', age: 3, forsale: true},
+  { name: 'Hulk Hogan', type: 'bunny', age: 1, forsale: true}
 ]
 
 // first, establish a connection to the db
