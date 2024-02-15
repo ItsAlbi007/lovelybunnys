@@ -41,7 +41,7 @@ router.patch('/snacks/:bunnyId/:snackId', requireToken, removeBlanks, (req, res,
 	Bunny.findById(bunnyId)
 		.then(handle404)
 		.then((bunny) => {
-      const theSnack = bunny.snacks.id(snackId)
+      const theSnack = bunny.snack.id(snackId)
 			// it will throw an error if the current user isn't the owner
 			requireOwnership(req, bunny)
 
@@ -59,21 +59,25 @@ router.patch('/snacks/:bunnyId/:snackId', requireToken, removeBlanks, (req, res,
 
 // DESTROY
 // DELETE /snack/5a7db6c74d55bc5awd/
-router.delete('/snacks/:bunnyId', removeBlanks, (req, res, next) => {
-  // save the snack from the request body
-  const snack =req.body.snack
-  // save the bunnyId for easy ref
-  const bunnyId = req.params.bunnyId
+router.delete('/snacks/:bunnyId/:snackId', requireToken, removeBlanks, (req, res, next) => {
+	const { bunnyId, snackId } = req.params
+
 
 	Bunny.findById(bunnyId)
-		// make sure we have a bunny
-    .then(handle404)
+		.then(handle404)
 		.then((bunny) => {
-      bunny.snack.push(snack)
-      
+      const theSnack = bunny.snack.id(snackId)
+			// it will throw an error if the current user isn't the owner
+			requireOwnership(req, bunny)
+
+      // update existing snack
+      theSnack.deleteOne()
+
 			return bunny.save()
 		})
-    .then(bunny => res.status(201).json({ bunny: bunny }))
+		// if that succeeded, return 204 and no JSON
+		.then(() => res.sendStatus(204))
+		// if an error occurs, pass it to the handler
 		.catch(next)
 })
 
@@ -86,7 +90,7 @@ router.patch('/snacks/:bunnyId/:snackId', requireToken, removeBlanks, (req, res,
 	Bunny.findById(bunnyId)
 		.then(handle404)
 		.then((bunny) => {
-      const theSnack = bunny.snacks.id(snackId)
+      const theSnack = bunny.snack.id(snackId)
 			// it will throw an error if the current user isn't the owner
 			requireOwnership(req, bunny)
 

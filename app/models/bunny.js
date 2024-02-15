@@ -16,6 +16,10 @@ const bunnySchema = new mongoose.Schema(
 			type: Number,
 			required: true,
 		},
+		thumbnail: {
+			type: String,
+			default: "",
+		},
 		forsale: {
 			type: Boolean,
 			required: true,

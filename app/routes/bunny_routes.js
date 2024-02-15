@@ -120,9 +120,9 @@ router.delete('/bunnys/:id', requireToken, (req, res, next) => {
 		.then(handle404)
 		.then((bunny) => {
 			// throw an error if current user doesn't own `bunny`
-			requireOwnership(req, bunny)
+		requireOwnership(req, bunny)
 			// delete the bunny ONLY IF the above didn't throw
-		  bunny.deleteOne()
+		bunny.deleteOne()
 		})
 		// send back 204 and no content if the deletion succeeded
 		.then(() => res.sendStatus(204))
