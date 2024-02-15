@@ -42,7 +42,19 @@ router.get('/bunnys',(req, res, next) => {
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
-
+router.get('/threeBunnys',(req, res, next) => {
+	Bunny.find().limit(3)
+		.then((bunnys) => {
+			// `bunnys` will be an array of Mongoose documents
+			// we want to convert each one to a POJO, so we use `.map` to
+			// apply `.toObject` to each one
+			return bunnys.map((bunny) => bunny.toObject())
+		})
+		// respond with status 200 and JSON of the bunnys
+		.then((bunnys) => res.status(200).json({ bunnys: bunnys }))
+		// if an error occurs, pass it to the handler
+		.catch(next)
+})
 // show route for only the logged in users pets
 // GEt /bunnys/mine
 // requiretoken gives us access to req.user.id
