@@ -41,5 +41,5 @@
 <h3>IceBox (Future Updates)</h3>
 
 <p>Be able to buy the bunny for real with debit/credit</p>
-<p>>Create a bigger list of actual bunnys for sale not just random photos</p>
+<p>Create a bigger list of actual bunnys for sale not just random photos</p>
 <p>Costumize the page into making it look like an actual shop.</p>
